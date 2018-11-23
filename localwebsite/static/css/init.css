@@ -1,0 +1,13 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Peng Zhu (iszhupeng@live.cn)
+ * @date    2018-03-12 16:28:27
+ * @version $Id$
+ */
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
