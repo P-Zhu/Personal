@@ -1,31 +1,31 @@
 Attribute VB_Name = "NewMacros"
 Public Function GetOutFolderName(ByVal DialogType As MsoFileDialogType) As String
-    '´ò¿ªÄ¿Â¼
+    'æ‰“å¼€ç›®å½•
     
     With Application.FileDialog(DialogType)
         .AllowMultiSelect = False
-        .Title = "Ñ¡ÔñHTMLÎÄ¼ş±£´æÎ»ÖÃ"
-        .ButtonName = "±£´æµ½"
+        .Title = "é€‰æ‹©HTMLæ–‡ä»¶ä¿å­˜ä½ç½®"
+        .ButtonName = "ä¿å­˜åˆ°"
         If .Show = True Then
             GetOutFolderName = .SelectedItems(1)
         End If
     End With
 End Function
 Public Function SelectFile()
-    'Ñ¡Ôñ¶à¸öÎÄ¼ş
+    'é€‰æ‹©å¤šä¸ªæ–‡ä»¶
     
     Dim i   As Integer
     With Application.FileDialog(msoFileDialogFilePicker)
         .AllowMultiSelect = True
-        .Title = "Ñ¡ÔñÎÄ¼ş"
-        'µ¥Ñ¡Ôñ
+        .Title = "é€‰æ‹©æ–‡ä»¶"
+        'å•é€‰æ‹©
         .Filters.Clear
-        'Çå³ıÎÄ¼ş¹ıÂËÆ÷
-        .Filters.Add "Ñ¡ÔñÒª×ª»»µÄµÄÎÄ¼ş", "*.doc;*.docx;*.docm;*.pdf"
+        'æ¸…é™¤æ–‡ä»¶è¿‡æ»¤å™¨
+        .Filters.Add "é€‰æ‹©è¦è½¬æ¢çš„çš„æ–‡ä»¶", "*.doc;*.docx;*.docm;*.pdf"
         .Filters.Add "All Files", "*.*"
-        'ÉèÖÃÁ½¸öÎÄ¼ş¹ıÂËÆ÷
+        'è®¾ç½®ä¸¤ä¸ªæ–‡ä»¶è¿‡æ»¤å™¨
         If .Show = -1 Then
-            'FileDialog ¶ÔÏóµÄ Show ·½·¨ÏÔÊ¾¶Ô»°¿ò£¬²¢ÇÒ·µ»Ø -1£¨Èç¹ûÄú°´ OK£©ºÍ 0£¨Èç¹ûÄú°´ Cancel£©
+            'FileDialog å¯¹è±¡çš„ Show æ–¹æ³•æ˜¾ç¤ºå¯¹è¯æ¡†ï¼Œå¹¶ä¸”è¿”å› -1ï¼ˆå¦‚æœæ‚¨æŒ‰ OKï¼‰å’Œ 0ï¼ˆå¦‚æœæ‚¨æŒ‰ Cancelï¼‰
             length = .SelectedItems.count
             ReDim Selcted(1 To length)
             For i = 1 To length
@@ -43,7 +43,7 @@ Sub PDF2Html()
     
     On Error Resume Next
     
-    Load FormTips   'ÔØÈëÌáÊ¾¿ò
+    Load FormTips   'è½½å…¥æç¤ºæ¡†
     
     Dim OutPath As String, _
         FName As String, _
@@ -66,19 +66,19 @@ Sub PDF2Html()
     Next
     ChangeFileOpenDirectory (OutPath)
     
-   ' Set FSO = CreateObject("Scripting.FileSystemObject")    '´´½¨¼ÆËã»úÎÄ¼şÏµÍ³ÒÔÏòÆä·ÃÎÊ
-    'Set FDR = FSO.GetFolder(InPath)                         'Ö¸¶¨ÆäÖĞ·ÃÎÊµÄÎÄ¼ş¼Ğ¶ÔÏó
-   ' Set FList = FDR.Files                                   '¶¨Òå¸ÃÎÄ¼ş¼ĞÖĞµÄËùÓĞÎÄ¼ş¼¯ºÏ
-    'FormTips.Caption = "ÕıÔÚ´¦Àí..."
-    'FormTips.OutInfo = "ÕıÔÚ´ò¿ªÎÄ¼ş¡­¡­"
+   ' Set FSO = CreateObject("Scripting.FileSystemObject")    'åˆ›å»ºè®¡ç®—æœºæ–‡ä»¶ç³»ç»Ÿä»¥å‘å…¶è®¿é—®
+    'Set FDR = FSO.GetFolder(InPath)                         'æŒ‡å®šå…¶ä¸­è®¿é—®çš„æ–‡ä»¶å¤¹å¯¹è±¡
+   ' Set FList = FDR.Files                                   'å®šä¹‰è¯¥æ–‡ä»¶å¤¹ä¸­çš„æ‰€æœ‰æ–‡ä»¶é›†åˆ
+    'FormTips.Caption = "æ­£åœ¨å¤„ç†..."
+    'FormTips.OutInfo = "æ­£åœ¨æ‰“å¼€æ–‡ä»¶â€¦â€¦"
     'FormTips.Show 0
     i = 1
     
-    Application.StatusBar = "ÕıÔÚ´ò¿ªÎÄ¼ş->"
+    Application.StatusBar = "æ­£åœ¨æ‰“å¼€æ–‡ä»¶->"
     
-    For Each InFile In Selected                                      'ÔÚÖ¸¶¨ÎÄ¼ş¼ĞÖĞÑ­»·
-    Application.StatusBar = "ÕıÔÚ´ò¿ªÎÄ¼ş->" & i & "/" & length & "   " & InFile
-        'FormTips.OutInfo = "´ò¿ªÎÄ¼ş" + vbCrLf + InFile
+    For Each InFile In Selected                                      'åœ¨æŒ‡å®šæ–‡ä»¶å¤¹ä¸­å¾ªç¯
+    Application.StatusBar = "æ­£åœ¨æ‰“å¼€æ–‡ä»¶->" & i & "/" & length & "   " & InFile
+        'FormTips.OutInfo = "æ‰“å¼€æ–‡ä»¶" + vbCrLf + InFile
         
         Documents.Open FileName:=InFile, _
             ConfirmConversions:=False, ReadOnly:=True, AddToRecentFiles:=False, _
@@ -87,12 +87,12 @@ Sub PDF2Html()
             wdOpenFormatAuto, XMLTransform:=""
             
         FileName = ActiveDocument.Name
-       ' FormTips.Caption = "ÕıÔÚ´¦Àí..." & i & "/" & length
-       ' FormTips.OutInfo = "ÕıÔÚ×ª»»..."
+       ' FormTips.Caption = "æ­£åœ¨å¤„ç†..." & i & "/" & length
+       ' FormTips.OutInfo = "æ­£åœ¨è½¬æ¢..."
         'DoEvents
-        Application.StatusBar = "ÕıÔÚ×ª»»..." & i & "/" & length & "   " & ActiveDocument.Name
+        Application.StatusBar = "æ­£åœ¨è½¬æ¢..." & i & "/" & length & "   " & ActiveDocument.Name
         i = i + 1
-       ' Application.Top = "ÕıÔÚ´¦Àí..." & i & "/"
+       ' Application.Top = "æ­£åœ¨å¤„ç†..." & i & "/"
         
         ActiveProtectedViewWindow.Edit
 
@@ -105,15 +105,15 @@ Sub PDF2Html()
     Next
     
    ' Unload FormTips
-    MsgBox "Êı¾İ´¦ÀíÍê±Ï£¡³ÌĞòÍË³ö£¡", 64, "ÏµÍ³ÌáÊ¾"
+    MsgBox "æ•°æ®å¤„ç†å®Œæ¯•ï¼ç¨‹åºé€€å‡ºï¼", 64, "ç³»ç»Ÿæç¤º"
             DoEvents
 
     SendKeys "%{F4}", True
 End Sub
-Sub ºê1()
-Attribute ºê1.VB_ProcData.VB_Invoke_Func = "Normal.NewMacros.ºê1"
+Sub å®1()
+Attribute å®1.VB_ProcData.VB_Invoke_Func = "Normal.NewMacros.å®1"
 '
-' ºê1 ºê
+' å®1 å®
 '
 '
     ActiveProtectedViewWindow.Edit
@@ -125,3 +125,4 @@ Attribute ºê1.VB_ProcData.VB_Invoke_Func = "Normal.NewMacros.ºê1"
         EmbedTrueTypeFonts:=False, SaveNativePictureFormat:=False, SaveFormsData _
         :=False, SaveAsAOCELetter:=False, CompatibilityMode:=15
 End Sub
+
