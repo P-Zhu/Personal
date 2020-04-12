@@ -1,6 +1,6 @@
 Attribute VB_Name = "NewMacros"
 
-Sub °´ÕÂ½Ú±£´æÎªPDF()
+Sub æŒ‰ç« èŠ‚ä¿å­˜ä¸ºPDF()
 Dim i%, aCount%
 n = 1 'Page_start
 t = 0 'Page_end
@@ -11,7 +11,7 @@ With ActiveDocument()
     aCount = .Sections.Count
     For i = 1 To aCount
 
-        t = .Sections(i).Range.ComputeStatistics(wdStatisticPages) - IIf(i = .Sections.Count, 0, 1)    '»ñÈ¡¸Ã½Ú×ÜÒ³Êı
+        t = .Sections(i).Range.ComputeStatistics(wdStatisticPages) - IIf(i = .Sections.Count, 0, 1)    'è·å–è¯¥èŠ‚æ€»é¡µæ•°
         ActiveDocument.ExportAsFixedFormat OutputFileName:=fn & Format(i, "00") & ".pdf", ExportFormat _
         :=wdExportFormatPDF, OpenAfterExport:=True, OptimizeFor:= _
         wdExportOptimizeForOnScreen, Range:=wdExportFromTo, From:=n, To:=n + t - 1, Item _
